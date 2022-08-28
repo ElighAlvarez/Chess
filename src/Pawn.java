@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Pawn implements GamePiece {
+public class Pawn extends GamePiece {
 
   private static final int POINT_VALUE = 1;
 

@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Bishop implements GamePiece {
+public class Bishop extends GamePiece {
 
   private static final int POINT_VALUE = 3;
   private String pieceColor;

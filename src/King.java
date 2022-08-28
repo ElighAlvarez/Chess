@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class King implements GamePiece {
+public class King extends GamePiece {
 
   private static final int POINT_VALUE = 999;
   private static final int[][] VALID_MOVES = {{-1, 1}, {0, 1}, {1, 1},

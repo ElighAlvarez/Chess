@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Rook implements GamePiece {
+public class Rook extends GamePiece {
 
   private static final int POINT_VALUE = 5;
   private String pieceColor;
