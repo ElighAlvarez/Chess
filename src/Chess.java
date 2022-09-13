@@ -1,5 +1,10 @@
 import java.util.Scanner;
 
+/**
+ * Contains the necessary methods to play a game of Chess.
+ *
+ * @author Eligh alvarez
+ */
 public class Chess {
 
   public static final String DEFAULT_COLOR = "\033[0m";
@@ -16,7 +21,10 @@ public class Chess {
   private int blackPoints;
   private int[] pos;
 
-
+  /**
+   * Allows players to play a game of Chess with the standard game setup.
+   * @param args (unused)
+   */
   public static void main(String[] args) {
     printWelcome();
     Scanner userInput = new Scanner(System.in);
@@ -56,12 +64,18 @@ public class Chess {
     setup();
   }
 
+  /**
+   * Creates a new standard Chess game.
+   */
   public Chess() {
     gameBoard = new Board();
     setup();
     display();
   }
 
+  /**
+   * Prints the welcome message to the console.
+   */
   public static void printWelcome() {
     System.out.println("\nWelcome to Chess!\n");
     System.out.println("To select a piece, using the x and y positions of the desired piece,"
@@ -72,6 +86,10 @@ public class Chess {
     System.out.println("To exit the game, type: \"exit\"   WARNING: GAME DOES NOT SAVE\n");
   }
 
+  /**
+   * Selects a position and makes it active.
+   * @param userInput The user input Scanner
+   */
   public void executeSelect(Scanner userInput) {
     int userInt = letterToNumber(userInput);
     if (userInt == 0) {
@@ -88,6 +106,7 @@ public class Chess {
     userInput.nextLine();
   }
 
+  // TODO: Continue JavaDocs here!
   public void executeMove(Scanner userInput) {
     int userInt = letterToNumber(userInput);
     if (userInt == 0) {

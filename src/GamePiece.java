@@ -1,5 +1,10 @@
 import java.util.ArrayList;
 
+/**
+ * A framework for GamePieces in the game of Chess.
+ *
+ * @author Eligh Alvarez
+ */
 abstract class GamePiece {
 
   abstract public int getPoints();
