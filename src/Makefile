@@ -1,8 +1,8 @@
-run: Chess.class Board.class Square.class Pawn.class Rook.class Knight.class Bishop.class King.class Queen.class GamePiece.class
+run: Chess.class Board.class Square.class Pawn.class Rook.class Knight.class Bishop.class King.class Queen.class GamePiece.class Vector2.class
 	java Chess
 clean:
 	rm *.class
-test: TestChess.class Chess.class Board.class Square.class Pawn.class Rook.class Knight.class Bishop.class King.class Queen.class GamePiece.class
+test: TestChess.class Chess.class Board.class Square.class Pawn.class Rook.class Knight.class Bishop.class King.class Queen.class GamePiece.class Vector2.class
 	java TestChess
 
 # .class dependencies
@@ -26,5 +26,7 @@ Queen.class: Queen.java
 	javac Queen.java
 GamePiece.class: GamePiece.java
 	javac GamePiece.java
+Vector2.class: Vector2.java
+    javac Vector2.java
 TestChess.class: TestChess.java
 	javac TestChess.java
