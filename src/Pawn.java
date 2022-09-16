@@ -42,14 +42,14 @@ public class Pawn extends GamePiece {
     // One square forward
     Vector2 tempMove = new Vector2(currPos.getX(), currPos.getY() + colorMultiplier);
     if (!Board.posInBounds(tempMove)) return moves;
-    if (gameBoard.getSquare(tempMove).getPiece() != null) return moves;
+    if (!gameBoard.posEmpty(tempMove)) return moves;
     moves.add(tempMove);
 
     // Two squares forward
     if (!hasMoved) {
       tempMove = new Vector2(currPos.getX(), currPos.getY() + (2 * colorMultiplier));
       if (!Board.posInBounds(tempMove)) return moves;
-      if (gameBoard.getSquare(tempMove).getPiece() != null) return moves;
+      if (!gameBoard.posEmpty(tempMove)) return moves;
       moves.add(tempMove);
     }
 
@@ -69,7 +69,7 @@ public class Pawn extends GamePiece {
     // Left diagonal
     Vector2 tempAttack = new Vector2(currPos.getX() - 1, currPos.getY() + colorMultiplier);
     if (Board.posInBounds(tempAttack) // Within bounds
-        && gameBoard.getSquare(tempAttack).getPiece() != null // Piece exists
+        && !gameBoard.posEmpty(tempAttack) // Piece exists
         && !getColor().equals(gameBoard.getSquare(tempAttack).getPiece().getColor())) { // Color is opposite
       attacks.add(tempAttack);
     }
@@ -77,7 +77,7 @@ public class Pawn extends GamePiece {
     // Right diagonal
     tempAttack = new Vector2(currPos.getX() + 1, currPos.getY() + colorMultiplier);
     if (Board.posInBounds(tempAttack) // Within bounds
-        && gameBoard.getSquare(tempAttack).getPiece() != null // Piece exists
+        && !gameBoard.posEmpty(tempAttack) // Piece exists
         && !getColor().equals(gameBoard.getSquare(tempAttack).getPiece().getColor())) { // Color is opposite
       attacks.add(tempAttack);
     }

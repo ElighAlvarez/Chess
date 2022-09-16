@@ -41,8 +41,7 @@ public class Rook extends GamePiece {
     // Left
     for (int i = 1; i <= 7; i++) {
       tempMove = new Vector2(currPos.getX() - i, currPos.getY());
-      // TODO: make an isEmpty() method instead of gameBoard.getSquare(tem........
-      if (Board.posInBounds(tempMove) && gameBoard.getSquare(tempMove).getPiece() == null) {
+      if (Board.posInBounds(tempMove) && gameBoard.posEmpty(tempMove)) {
         moves.add(tempMove);
       } else {
         break;
@@ -52,7 +51,7 @@ public class Rook extends GamePiece {
     // Right
     for (int i = 1; i <= 7; i++) {
       tempMove = new Vector2(currPos.getX() + i, currPos.getY());
-      if (Board.posInBounds(tempMove) && gameBoard.getSquare(tempMove).getPiece() == null) {
+      if (Board.posInBounds(tempMove) && gameBoard.posEmpty(tempMove)) {
         moves.add(tempMove);
       } else {
         break;
@@ -62,7 +61,7 @@ public class Rook extends GamePiece {
     // Up
     for (int i = 1; i <= 7; i++) {
       tempMove = new Vector2(currPos.getX(), currPos.getY() + i);
-      if (Board.posInBounds(tempMove) && gameBoard.getSquare(tempMove).getPiece() == null) {
+      if (Board.posInBounds(tempMove) && gameBoard.posEmpty(tempMove)) {
         moves.add(tempMove);
       } else {
         break;
@@ -72,7 +71,7 @@ public class Rook extends GamePiece {
     // Down
     for (int i = 1; i <= 7; i++) {
       tempMove = new Vector2(currPos.getX(), currPos.getY() - i);
-      if (Board.posInBounds(tempMove) && gameBoard.getSquare(tempMove).getPiece() == null) {
+      if (Board.posInBounds(tempMove) && gameBoard.posEmpty(tempMove)) {
         moves.add(tempMove);
       } else {
         break;
@@ -96,8 +95,7 @@ public class Rook extends GamePiece {
     // Left
     i = 1;
     tempAttack = new Vector2(currPos.getX() - i, currPos.getY());
-    while (Board.posInBounds(tempAttack)
-        && gameBoard.getSquare(tempAttack).getPiece() == null) {
+    while (Board.posInBounds(tempAttack) && gameBoard.posEmpty(tempAttack)) {
       i++;
       tempAttack = new Vector2(currPos.getX() - i, currPos.getY());
     }
@@ -109,8 +107,7 @@ public class Rook extends GamePiece {
     // Right
     i = 1;
     tempAttack = new Vector2(currPos.getX() + i, currPos.getY());
-    while (Board.posInBounds(tempAttack)
-        && gameBoard.getSquare(tempAttack).getPiece() == null) {
+    while (Board.posInBounds(tempAttack) && gameBoard.posEmpty(tempAttack)) {
       i++;
       tempAttack = new Vector2(currPos.getX() + i, currPos.getY());
     }
@@ -122,8 +119,7 @@ public class Rook extends GamePiece {
     // Up
     i = 1;
     tempAttack = new Vector2(currPos.getX(), currPos.getY() + i);
-    while (Board.posInBounds(tempAttack)
-        && gameBoard.getSquare(tempAttack).getPiece() == null) {
+    while (Board.posInBounds(tempAttack) && gameBoard.posEmpty(tempAttack)) {
       i++;
       tempAttack = new Vector2(currPos.getX(), currPos.getY() + i);
     }
@@ -135,8 +131,7 @@ public class Rook extends GamePiece {
     // Down
     i = 1;
     tempAttack = new Vector2(currPos.getX(), currPos.getY() - i);
-    while (Board.posInBounds(tempAttack)
-        && gameBoard.getSquare(tempAttack).getPiece() == null) {
+    while (Board.posInBounds(tempAttack) && gameBoard.posEmpty(tempAttack)) {
       i++;
       tempAttack = new Vector2(currPos.getX(), currPos.getY() - i);
     }

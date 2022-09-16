@@ -35,6 +35,15 @@ public class Board {
   }
 
   /**
+   * Returns whether the provided position is empty.
+   * @param pos
+   * @return
+   */
+  public boolean posEmpty(Vector2 pos) {
+    return getSquare(pos) != null && getSquare(pos).getPiece() == null;
+  }
+
+  /**
    * Returns a String representation of this board, including Squares, Pieces, and coordinate
    * labels (a-h and 1-8)
    * @return a String representation of this board

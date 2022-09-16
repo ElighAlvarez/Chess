@@ -48,7 +48,7 @@ public class Knight extends GamePiece {
     for (int i = 0; i < 8; i++) {
       tempMove = new Vector2(currPos.getX() + VALID_MOVES[i].getX(),
                              currPos.getY() + VALID_MOVES[i].getY());
-      if (Board.posInBounds(tempMove) && gameBoard.getSquare(tempMove).getPiece() == null) {
+      if (Board.posInBounds(tempMove) && gameBoard.posEmpty(tempMove)) {
         moves.add(tempMove);
       }
     }
@@ -70,7 +70,7 @@ public class Knight extends GamePiece {
       tempAttack = new Vector2(currPos.getX() + VALID_MOVES[i].getX(),
           currPos.getY() + VALID_MOVES[i].getY());
       if (Board.posInBounds(tempAttack)
-          && gameBoard.getSquare(tempAttack).getPiece() != null
+          && !gameBoard.posEmpty(tempAttack)
           && !getColor().equals(gameBoard.getSquare(tempAttack).getPiece().getColor())) {
         attacks.add(tempAttack);
       }

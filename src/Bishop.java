@@ -39,7 +39,7 @@ public class Bishop extends GamePiece {
     // Left Down
     for (int i = 1; i <= 7; i++) {
       tempMove = new Vector2(currPos.getX() - i, currPos.getY() - i);
-      if (Board.posInBounds(tempMove) && gameBoard.getSquare(tempMove).getPiece() == null) {
+      if (Board.posInBounds(tempMove) && gameBoard.posEmpty(tempMove)) {
         moves.add(tempMove);
       } else {
         break;
@@ -49,7 +49,7 @@ public class Bishop extends GamePiece {
     // Right Down
     for (int i = 1; i <= 7; i++) {
       tempMove = new Vector2(currPos.getX() + i, currPos.getY() - i);
-      if (Board.posInBounds(tempMove) && gameBoard.getSquare(tempMove).getPiece() == null) {
+      if (Board.posInBounds(tempMove) && gameBoard.posEmpty(tempMove)) {
         moves.add(tempMove);
       } else {
         break;
@@ -59,7 +59,7 @@ public class Bishop extends GamePiece {
     // Left Up
     for (int i = 1; i <= 7; i++) {
       tempMove = new Vector2(currPos.getX() - i, currPos.getY() + i);
-      if (Board.posInBounds(tempMove) && gameBoard.getSquare(tempMove).getPiece() == null) {
+      if (Board.posInBounds(tempMove) && gameBoard.posEmpty(tempMove)) {
         moves.add(tempMove);
       } else {
         break;
@@ -69,7 +69,7 @@ public class Bishop extends GamePiece {
     // Right Up
     for (int i = 1; i <= 7; i++) {
       tempMove = new Vector2(currPos.getX() + i, currPos.getY() + i);
-      if (Board.posInBounds(tempMove) && gameBoard.getSquare(tempMove).getPiece() == null) {
+      if (Board.posInBounds(tempMove) && gameBoard.posEmpty(tempMove)) {
         moves.add(tempMove);
       } else {
         break;
@@ -94,7 +94,7 @@ public class Bishop extends GamePiece {
     i = 1;
     tempAttack = new Vector2(currPos.getX() - i, currPos.getY() - i);
     while (Board.posInBounds(tempAttack)
-        && gameBoard.getSquare(tempAttack).getPiece() == null) {
+        && gameBoard.posEmpty(tempAttack)) {
       i++;
       tempAttack = new Vector2(currPos.getX() - i, currPos.getY() - i);
     }
@@ -107,7 +107,7 @@ public class Bishop extends GamePiece {
     i = 1;
     tempAttack = new Vector2(currPos.getX() + i, currPos.getY() - i);
     while (Board.posInBounds(tempAttack)
-        && gameBoard.getSquare(tempAttack).getPiece() == null) {
+        && gameBoard.posEmpty(tempAttack)) {
       i++;
       tempAttack = new Vector2(currPos.getX() + i, currPos.getY() - i);
     }
@@ -120,7 +120,7 @@ public class Bishop extends GamePiece {
     i = 1;
     tempAttack = new Vector2(currPos.getX() - i, currPos.getY() + i);
     while (Board.posInBounds(tempAttack)
-        && gameBoard.getSquare(tempAttack).getPiece() == null) {
+        && gameBoard.posEmpty(tempAttack)) {
       i++;
       tempAttack = new Vector2(currPos.getX() - i, currPos.getY() + i);
     }
@@ -133,7 +133,7 @@ public class Bishop extends GamePiece {
     i = 1;
     tempAttack = new Vector2(currPos.getX() + i, currPos.getY() + i);
     while (Board.posInBounds(tempAttack)
-        && gameBoard.getSquare(tempAttack).getPiece() == null) {
+        && gameBoard.posEmpty(tempAttack)) {
       i++;
       tempAttack = new Vector2(currPos.getX() + i, currPos.getY() + i);
     }
