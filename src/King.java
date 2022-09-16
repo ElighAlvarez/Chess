@@ -8,12 +8,20 @@ import java.util.ArrayList;
 public class King extends GamePiece {
 
   private static final int POINT_VALUE = 999;
-  private static final int[][] VALID_MOVES = {{-1, 1}, {0, 1}, {1, 1},
-                                              {-1, 0},  /*K*/  {1, 0},
-                                              {-1, -1}, {0, -1}, {1, -1}};
+  private static final Vector2[] VALID_MOVES = {
+      new Vector2(-1, 1),
+      new Vector2(0, 1),
+      new Vector2(1, 1),
+      new Vector2(-1, 0),
+      new Vector2(1, 0),
+      new Vector2(-1, -1),
+      new Vector2(0, -1),
+      new Vector2(1, -1)
+  };
+
   private String pieceColor;
   private boolean hasMoved;
-  private int[] currPos;
+  private Vector2 currPos;
 
   /**
    * Creates a new King of the specified ASCII color.
@@ -36,13 +44,14 @@ public class King extends GamePiece {
    * @param gameBoard The Board containing this piece.
    * @return A valid list of moves for this piece.
    */
-  public ArrayList<int[]> getMoves(Board gameBoard) {
-    ArrayList<int[]> moves = new ArrayList<>();
-    int[] currPos = gameBoard.getActivePos();
-    int[] tempMove;
+  public ArrayList<Vector2> getMoves(Board gameBoard) {
+    ArrayList<Vector2> moves = new ArrayList<>();
+    Vector2 currPos = gameBoard.getActivePos();
+    Vector2 tempMove;
 
     for (int i = 0; i < 8; i++) {
-      tempMove = new int[] {currPos[0] + VALID_MOVES[i][0], currPos[1] + VALID_MOVES[i][1]};
+      tempMove = new Vector2(currPos.getX() + VALID_MOVES[i].getX(),
+                             currPos.getY() + VALID_MOVES[i].getY());
       if (Board.posInBounds(tempMove) && gameBoard.getSquare(tempMove).getPiece() == null) {
         moves.add(tempMove);
       }
@@ -56,13 +65,14 @@ public class King extends GamePiece {
    * @param gameBoard The Board containing this piece.
    * @return A valid list of attacks for this piece.
    */
-  public ArrayList<int[]> getAttacks(Board gameBoard) {
-    ArrayList<int[]> attacks = new ArrayList<>();
-    int[] currPos = gameBoard.getActivePos();
-    int[] tempAttack;
+  public ArrayList<Vector2> getAttacks(Board gameBoard) {
+    ArrayList<Vector2> attacks = new ArrayList<>();
+    Vector2 currPos = gameBoard.getActivePos();
+    Vector2 tempAttack;
 
     for (int i = 0; i < 8; i++) {
-      tempAttack = new int[] {currPos[0] + VALID_MOVES[i][0], currPos[1] + VALID_MOVES[i][1]};
+      tempAttack = new Vector2(currPos.getX() + VALID_MOVES[i].getX(),
+          currPos.getY() + VALID_MOVES[i].getY());
       if (Board.posInBounds(tempAttack)
           && gameBoard.getSquare(tempAttack).getPiece() != null
           && !getColor().equals(gameBoard.getSquare(tempAttack).getPiece().getColor())) {
@@ -93,7 +103,7 @@ public class King extends GamePiece {
    * Updates internal values associated with movement of this piece.
    * @param pos the position of this piece after it is moved in [x, y] format
    */
-  public void move(int[] pos) {
+  public void move(Vector2 pos) {
     hasMoved = true;
     currPos = pos;
   }

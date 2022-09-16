@@ -10,7 +10,7 @@ public class Rook extends GamePiece {
   private static final int POINT_VALUE = 5;
   private String pieceColor;
   private boolean hasMoved;
-  private int[] currPos;
+  private Vector2 currPos;
 
   /**
    * Creates a new Rook of the specified ASCII color.
@@ -33,14 +33,14 @@ public class Rook extends GamePiece {
    * @param gameBoard The Board containing this piece.
    * @return A valid list of moves for this piece.
    */
-  public ArrayList<int[]> getMoves(Board gameBoard) {
-    ArrayList<int[]> moves = new ArrayList<>();
-    int[] currPos = gameBoard.getActivePos();
-    int[] tempMove;
+  public ArrayList<Vector2> getMoves(Board gameBoard) {
+    ArrayList<Vector2> moves = new ArrayList<>();
+    Vector2 currPos = gameBoard.getActivePos();
+    Vector2 tempMove;
 
     // Left
     for (int i = 1; i <= 7; i++) {
-      tempMove = new int[] {currPos[0] - i, currPos[1]};
+      tempMove = new Vector2(currPos.getX() - i, currPos.getY());
       // TODO: make an isEmpty() method instead of gameBoard.getSquare(tem........
       if (Board.posInBounds(tempMove) && gameBoard.getSquare(tempMove).getPiece() == null) {
         moves.add(tempMove);
@@ -51,7 +51,7 @@ public class Rook extends GamePiece {
 
     // Right
     for (int i = 1; i <= 7; i++) {
-      tempMove = new int[] {currPos[0] + i, currPos[1]};
+      tempMove = new Vector2(currPos.getX() + i, currPos.getY());
       if (Board.posInBounds(tempMove) && gameBoard.getSquare(tempMove).getPiece() == null) {
         moves.add(tempMove);
       } else {
@@ -61,7 +61,7 @@ public class Rook extends GamePiece {
 
     // Up
     for (int i = 1; i <= 7; i++) {
-      tempMove = new int[] {currPos[0], currPos[1] + i};
+      tempMove = new Vector2(currPos.getX(), currPos.getY() + i);
       if (Board.posInBounds(tempMove) && gameBoard.getSquare(tempMove).getPiece() == null) {
         moves.add(tempMove);
       } else {
@@ -71,7 +71,7 @@ public class Rook extends GamePiece {
 
     // Down
     for (int i = 1; i <= 7; i++) {
-      tempMove = new int[] {currPos[0], currPos[1] - i};
+      tempMove = new Vector2(currPos.getX(), currPos.getY() - i);
       if (Board.posInBounds(tempMove) && gameBoard.getSquare(tempMove).getPiece() == null) {
         moves.add(tempMove);
       } else {
@@ -87,19 +87,19 @@ public class Rook extends GamePiece {
    * @param gameBoard The Board containing this piece.
    * @return A valid list of attacks for this piece.
    */
-  public ArrayList<int[]> getAttacks(Board gameBoard) {
-    ArrayList<int[]> attacks = new ArrayList<>();
-    int[] currPos = gameBoard.getActivePos();
-    int[] tempAttack;
+  public ArrayList<Vector2> getAttacks(Board gameBoard) {
+    ArrayList<Vector2> attacks = new ArrayList<>();
+    Vector2 currPos = gameBoard.getActivePos();
+    Vector2 tempAttack;
     int i;
 
     // Left
     i = 1;
-    tempAttack = new int[] {currPos[0] - i, currPos[1]};
+    tempAttack = new Vector2(currPos.getX() - i, currPos.getY());
     while (Board.posInBounds(tempAttack)
         && gameBoard.getSquare(tempAttack).getPiece() == null) {
       i++;
-      tempAttack = new int[] {currPos[0] - i, currPos[1]};
+      tempAttack = new Vector2(currPos.getX() - i, currPos.getY());
     }
     if (Board.posInBounds(tempAttack)
         && !getColor().equals(gameBoard.getSquare(tempAttack).getPiece().getColor())) {
@@ -108,11 +108,11 @@ public class Rook extends GamePiece {
 
     // Right
     i = 1;
-    tempAttack = new int[] {currPos[0] + i, currPos[1]};
+    tempAttack = new Vector2(currPos.getX() + i, currPos.getY());
     while (Board.posInBounds(tempAttack)
         && gameBoard.getSquare(tempAttack).getPiece() == null) {
       i++;
-      tempAttack = new int[] {currPos[0] + i, currPos[1]};
+      tempAttack = new Vector2(currPos.getX() + i, currPos.getY());
     }
     if (Board.posInBounds(tempAttack)
         && !getColor().equals(gameBoard.getSquare(tempAttack).getPiece().getColor())) {
@@ -121,11 +121,11 @@ public class Rook extends GamePiece {
 
     // Up
     i = 1;
-    tempAttack = new int[] {currPos[0], currPos[1] + i};
+    tempAttack = new Vector2(currPos.getX(), currPos.getY() + i);
     while (Board.posInBounds(tempAttack)
         && gameBoard.getSquare(tempAttack).getPiece() == null) {
       i++;
-      tempAttack = new int[] {currPos[0], currPos[1] + i};
+      tempAttack = new Vector2(currPos.getX(), currPos.getY() + i);
     }
     if (Board.posInBounds(tempAttack)
         && !getColor().equals(gameBoard.getSquare(tempAttack).getPiece().getColor())) {
@@ -134,11 +134,11 @@ public class Rook extends GamePiece {
 
     // Down
     i = 1;
-    tempAttack = new int[] {currPos[0], currPos[1] - i};
+    tempAttack = new Vector2(currPos.getX(), currPos.getY() - i);
     while (Board.posInBounds(tempAttack)
         && gameBoard.getSquare(tempAttack).getPiece() == null) {
       i++;
-      tempAttack = new int[] {currPos[0], currPos[1] - i};
+      tempAttack = new Vector2(currPos.getX(), currPos.getY() - i);
     }
     if (Board.posInBounds(tempAttack)
         && !getColor().equals(gameBoard.getSquare(tempAttack).getPiece().getColor())) {
@@ -168,7 +168,7 @@ public class Rook extends GamePiece {
    * Updates internal values associated with movement of this piece.
    * @param pos the position of this piece after it is moved in [x, y] format
    */
-  public void move(int[] pos) {
+  public void move(Vector2 pos) {
     hasMoved = true;
     currPos = pos;
   }

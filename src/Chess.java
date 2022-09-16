@@ -7,6 +7,7 @@ import java.util.Scanner;
  */
 public class Chess {
 
+  // ASCII Console Color Escape Characters
   public static final String DEFAULT_COLOR = "\033[0m";
   public static final String BLACK_PIECE_COLOR = "\033[34m";
   public static final String WHITE_PIECE_COLOR = "\033[36m";
@@ -19,7 +20,7 @@ public class Chess {
   private Board gameBoard;
   private int whitePoints;
   private int blackPoints;
-  private int[] pos;
+  private Vector2 pos;
 
   /**
    * Allows players to play a game of Chess with the standard game setup.
@@ -29,7 +30,7 @@ public class Chess {
     printWelcome();
     Scanner userInput = new Scanner(System.in);
     Chess game = new Chess();
-    game.pos = new int[2];
+    game.pos = new Vector2(0, 0);
     boolean exit = false;
 
     while(!exit && game.whitePoints < 900 && game.blackPoints < 900) {
@@ -91,19 +92,26 @@ public class Chess {
    * @param userInput The user input Scanner
    */
   public void executeSelect(Scanner userInput) {
-    int userInt = letterToNumber(userInput);
-    if (userInt == 0) {
+    String[] userTokens = userInput.nextLine().trim().split(" ");
+    int x, y;
+
+    if (userTokens.length != 2) {
       System.out.println("Selection command improperly formatted. Try again.");
-      return;
-    } else pos[0] = userInt;
-    if (userInput.hasNextInt()) pos[1] = userInput.nextInt();
-    else {
-      System.out.println("Selection command improperly formatted. Try again.");
-      userInput.nextLine();
       return;
     }
-    selectPiece(pos);
-    userInput.nextLine();
+    x = columnToInt(userTokens[0]);
+    if (x == 0) {
+      System.out.println("Selection command improperly formatted. Try again.");
+      return;
+    }
+    try {
+      y = Integer.parseInt(userTokens[1]);
+    } catch (NumberFormatException e) {
+      System.out.println("Selection command improperly formatted. Try again.");
+      return;
+    }
+
+    selectPiece(new Vector2(x, y));
   }
 
   /**
@@ -111,19 +119,26 @@ public class Chess {
    * @param userInput The user input Scanner
    */
   public void executeMove(Scanner userInput) {
-    int userInt = letterToNumber(userInput);
-    if (userInt == 0) {
+    String[] userTokens = userInput.nextLine().trim().split(" ");
+    int x, y;
+
+    if (userTokens.length != 2) {
       System.out.println("Movement command improperly formatted. Try again.");
-      return;
-    } else pos[0] = userInt;
-    if (userInput.hasNextInt()) pos[1] = userInput.nextInt();
-    else {
-      System.out.println("Movement command improperly formatted. Try again.");
-      userInput.nextLine();
       return;
     }
-    moveCurrentPiece(pos);
-    userInput.nextLine();
+    x = columnToInt(userTokens[0]);
+    if (x == 0) {
+      System.out.println("Movement command improperly formatted. Try again.");
+      return;
+    }
+    try {
+      y = Integer.parseInt(userTokens[1]);
+    } catch (NumberFormatException e) {
+      System.out.println("Movement command improperly formatted. Try again.");
+      return;
+    }
+
+    moveCurrentPiece(new Vector2(x, y));
   }
 
   /**
@@ -148,39 +163,39 @@ public class Chess {
     String white = WHITE_PIECE_COLOR;
     String black = BLACK_PIECE_COLOR;
     // White Rooks
-    gameBoard.putPiece(new Rook(white), new int[] {1, 1});
-    gameBoard.putPiece(new Rook(white), new int[] {8, 1});
+    gameBoard.putPiece(new Rook(white), new Vector2(1, 1));
+    gameBoard.putPiece(new Rook(white), new Vector2(8, 1));
     // White Knights
-    gameBoard.putPiece(new Knight(white), new int[] {2, 1});
-    gameBoard.putPiece(new Knight(white), new int[] {7, 1});
+    gameBoard.putPiece(new Knight(white), new Vector2(2, 1));
+    gameBoard.putPiece(new Knight(white), new Vector2(7, 1));
     // White Bishops
-    gameBoard.putPiece(new Bishop(white), new int[] {3, 1});
-    gameBoard.putPiece(new Bishop(white), new int[] {6, 1});
+    gameBoard.putPiece(new Bishop(white), new Vector2(3, 1));
+    gameBoard.putPiece(new Bishop(white), new Vector2(6, 1));
     // White King
-    gameBoard.putPiece(new King(white), new int[] {5, 1});
+    gameBoard.putPiece(new King(white), new Vector2(5, 1));
     // White Queen
-    gameBoard.putPiece(new Queen(white), new int[] {4, 1});
+    gameBoard.putPiece(new Queen(white), new Vector2(4, 1));
     // White Pawns
     for (int i = 1; i <= 8; i++) {
-      gameBoard.putPiece(new Pawn(white), new int[] {i, 2});
+      gameBoard.putPiece(new Pawn(white), new Vector2(i, 2));
     }
 
     // Black Rooks
-    gameBoard.putPiece(new Rook(black), new int[] {1, 8});
-    gameBoard.putPiece(new Rook(black), new int[] {8, 8});
+    gameBoard.putPiece(new Rook(black), new Vector2(1, 8));
+    gameBoard.putPiece(new Rook(black), new Vector2(8, 8));
     // Black Knights
-    gameBoard.putPiece(new Knight(black), new int[]{2, 8});
-    gameBoard.putPiece(new Knight(black), new int[]{7, 8});
+    gameBoard.putPiece(new Knight(black), new Vector2(2, 8));
+    gameBoard.putPiece(new Knight(black), new Vector2(7, 8));
     // Black Bishops
-    gameBoard.putPiece(new Bishop(black), new int[]{3, 8});
-    gameBoard.putPiece(new Bishop(black), new int[]{6, 8});
+    gameBoard.putPiece(new Bishop(black), new Vector2(3, 8));
+    gameBoard.putPiece(new Bishop(black), new Vector2(6, 8));
     // Black King
-    gameBoard.putPiece(new King(black), new int[]{5, 8});
+    gameBoard.putPiece(new King(black), new Vector2(5, 8));
     // Black Queen
-    gameBoard.putPiece(new Queen(black), new int[]{4, 8});
+    gameBoard.putPiece(new Queen(black), new Vector2(4, 8));
     // Black Pawns
     for (int i = 1; i <= 8; i++) {
-      gameBoard.putPiece(new Pawn(black), new int[]{i, 7});
+      gameBoard.putPiece(new Pawn(black), new Vector2(i, 7));
     }
   }
 
@@ -196,10 +211,10 @@ public class Chess {
    * a piece is not at that position.
    * @param pos The position to select in [x, y] format
    */
-  public void selectPiece(int[] pos) {
+  public void selectPiece(Vector2 pos) {
     if (gameBoard.getSquare(pos) == null || gameBoard.getSquare(pos).getPiece() == null) {
       System.out.println("There is no piece at that position.");
-      gameBoard.setActiveSquare(new int[] {0, 0});
+      gameBoard.setActiveSquare(new Vector2(0, 0));
     } else {
       gameBoard.setActiveSquare(pos);
     }
@@ -212,7 +227,7 @@ public class Chess {
    * the piece. Other movements are not allowed.
    * @param pos The target of a move in [x, y] format
    */
-  public void moveCurrentPiece(int[] pos) {
+  public void moveCurrentPiece(Vector2 pos) {
     Square target = gameBoard.getSquare(pos);
     Square current = gameBoard.getActiveSquare();
     if (current == null) {
@@ -230,15 +245,17 @@ public class Chess {
         whitePoints += target.getPiece().getPoints();
       else blackPoints += target.getPiece().getPoints();
 
-      current.getPiece().move(new int[] {pos[0], pos[1]});
+      current.getPiece().move(new Vector2(pos.getX(), pos.getY()));
       target.setPiece(current.getPiece());
       current.setPiece(null);
-      gameBoard.setActiveSquare(new int[] {0, 0});
+      gameBoard.setActiveSquare(new Vector2(0, 0));
+
     } else if (target.getColor().equals(MOVE_SPACE_COLOR)) {
-      current.getPiece().move(new int[] {pos[0], pos[1]});
+      current.getPiece().move(new Vector2(pos.getX(), pos.getY()));
       target.setPiece(current.getPiece());
       current.setPiece(null);
-      gameBoard.setActiveSquare(new int[] {0, 0});
+      gameBoard.setActiveSquare(new Vector2(0, 0));
+
     } else {
       System.out.println("You cannot move the specified piece here.");
     }
@@ -248,30 +265,27 @@ public class Chess {
 
   /**
    * Translates a user-provided column indicator (letter) to its corresponding int value
-   * @param userInput The user input Scanner
-   * @return The int value of the user-provided column indicator. 0 if the provided input is invalid
+   * @param col The letter representation of the column
+   * @return The int value of the column
    */
-  public static int letterToNumber(Scanner userInput) {
-    if (!userInput.hasNext()) {
-      userInput.nextLine();
-      return 0;
-    }
-    switch (userInput.next().charAt(0)) {
-      case 'a':
+  public static int columnToInt(String col) {
+
+    switch (col) {
+      case "a":
         return 1;
-      case 'b':
+      case "b":
         return 2;
-      case 'c':
+      case "c":
         return 3;
-      case 'd':
+      case "d":
         return 4;
-      case 'e':
+      case "e":
         return 5;
-      case 'f':
+      case "f":
         return 6;
-      case 'g':
+      case "g":
         return 7;
-      case 'h':
+      case "h":
         return 8;
       default:
         return 0;

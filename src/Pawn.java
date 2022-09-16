@@ -11,7 +11,7 @@ public class Pawn extends GamePiece {
 
   private String pieceColor;
   private boolean hasMoved;
-  private int[] currPos;
+  private Vector2 currPos;
 
   /**
    * Creates a new Pawn of the specified ASCII color.
@@ -34,20 +34,20 @@ public class Pawn extends GamePiece {
    * @param gameBoard The Board containing this piece.
    * @return A valid list of moves for this piece.
    */
-  public ArrayList<int[]> getMoves(Board gameBoard) {
-    ArrayList<int[]> moves = new ArrayList<>();
+  public ArrayList<Vector2> getMoves(Board gameBoard) {
+    ArrayList<Vector2> moves = new ArrayList<>();
     int colorMultiplier = pieceColor.equals(Chess.WHITE_PIECE_COLOR) ? 1 : -1;
-    int[] currPos = gameBoard.getActivePos();
+    Vector2 currPos = gameBoard.getActivePos();
 
     // One square forward
-    int[] tempMove = new int[] {currPos[0], currPos[1] + colorMultiplier};
+    Vector2 tempMove = new Vector2(currPos.getX(), currPos.getY() + colorMultiplier);
     if (!Board.posInBounds(tempMove)) return moves;
     if (gameBoard.getSquare(tempMove).getPiece() != null) return moves;
     moves.add(tempMove);
 
     // Two squares forward
     if (!hasMoved) {
-      tempMove = new int[]{currPos[0], currPos[1] + (2 * colorMultiplier)};
+      tempMove = new Vector2(currPos.getX(), currPos.getY() + (2 * colorMultiplier));
       if (!Board.posInBounds(tempMove)) return moves;
       if (gameBoard.getSquare(tempMove).getPiece() != null) return moves;
       moves.add(tempMove);
@@ -61,13 +61,13 @@ public class Pawn extends GamePiece {
    * @param gameBoard The Board containing this piece.
    * @return A valid list of attacks for this piece.
    */
-  public ArrayList<int[]> getAttacks(Board gameBoard) {
-    ArrayList<int[]> attacks = new ArrayList<>();
+  public ArrayList<Vector2> getAttacks(Board gameBoard) {
+    ArrayList<Vector2> attacks = new ArrayList<>();
     int colorMultiplier = pieceColor.equals(Chess.WHITE_PIECE_COLOR) ? 1 : -1;
-    int[] currPos = gameBoard.getActivePos();
+    Vector2 currPos = gameBoard.getActivePos();
 
     // Left diagonal
-    int[] tempAttack = new int[] {currPos[0] - 1, currPos[1] + colorMultiplier};
+    Vector2 tempAttack = new Vector2(currPos.getX() - 1, currPos.getY() + colorMultiplier);
     if (Board.posInBounds(tempAttack) // Within bounds
         && gameBoard.getSquare(tempAttack).getPiece() != null // Piece exists
         && !getColor().equals(gameBoard.getSquare(tempAttack).getPiece().getColor())) { // Color is opposite
@@ -75,7 +75,7 @@ public class Pawn extends GamePiece {
     }
 
     // Right diagonal
-    tempAttack = new int[] {currPos[0] + 1, currPos[1] + colorMultiplier};
+    tempAttack = new Vector2(currPos.getX() + 1, currPos.getY() + colorMultiplier);
     if (Board.posInBounds(tempAttack) // Within bounds
         && gameBoard.getSquare(tempAttack).getPiece() != null // Piece exists
         && !getColor().equals(gameBoard.getSquare(tempAttack).getPiece().getColor())) { // Color is opposite
@@ -107,7 +107,7 @@ public class Pawn extends GamePiece {
    * Updates internal values associated with movement of this piece.
    * @param pos the position of this piece after it is moved in [x, y] format
    */
-  public void move(int[] pos) {
+  public void move(Vector2 pos) {
     hasMoved = true;
     currPos = pos;
   }

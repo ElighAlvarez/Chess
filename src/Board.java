@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Board {
 
   private Square[][] squares;
-  private int[] activePos;
+  private Vector2 activePos;
 
   /**
    * Creates a new empty Chess board
@@ -21,7 +21,7 @@ public class Board {
         else squares[i][j] = new Square(null, Chess.DARK_SPACE_COLOR);
       }
     }
-    activePos = new int[] {0, 0};
+    activePos = new Vector2(0, 0);
   }
 
   /**
@@ -29,8 +29,9 @@ public class Board {
    * @param posToCheck The position to check in [x, y] format
    * @return True if the position is in bounds, False otherwise
    */
-  public static boolean posInBounds(int[] posToCheck) {
-    return posToCheck[0] >= 1 && posToCheck[0] <= 8 && posToCheck[1] >= 1 && posToCheck[1] <= 8;
+  public static boolean posInBounds(Vector2 posToCheck) {
+    return posToCheck.getX() >= 1 && posToCheck.getX() <= 8
+        && posToCheck.getY() >= 1 && posToCheck.getY() <= 8;
   }
 
   /**
@@ -56,7 +57,7 @@ public class Board {
    * @param piece The piece to be placed
    * @param pos The position at which to put the specified piece.
    */
-  public void putPiece(GamePiece piece, int[] pos) {
+  public void putPiece(GamePiece piece, Vector2 pos) {
     getSquare(pos).setPiece(piece);
   }
 
@@ -65,17 +66,17 @@ public class Board {
    * @param pos The position to pull from.
    * @return The Square at the specified position
    */
-  public Square getSquare(int[] pos) {
+  public Square getSquare(Vector2 pos) {
     if (!posInBounds(pos)) return null;
-    else return squares[8 - pos[1]][pos[0] - 1];
+    else return squares[8 - pos.getY()][pos.getX() - 1];
   }
 
   /**
    * Sets the Square at the specified position as the active square
    * @param pos The new active position in [x, y] format
    */
-  public void setActiveSquare(int[] pos) {
-    activePos = new int[] {pos[0], pos[1]};
+  public void setActiveSquare(Vector2 pos) {
+    activePos = pos.deepCopy();
     updateHighlights();
   }
 
@@ -83,7 +84,7 @@ public class Board {
    * Returns the active position in [x, y] format.
    * @return the active position in [x, y] format.
    */
-  public int[] getActivePos() {
+  public Vector2 getActivePos() {
     return activePos;
   }
 
@@ -106,13 +107,13 @@ public class Board {
     Square activeSquare = getActiveSquare();
     activeSquare.setColor(Chess.ACTIVE_SPACE_COLOR);
 
-    ArrayList<int[]> moves = activeSquare.getPiece().getMoves(this);
-    for (int[] move : moves) {
+    ArrayList<Vector2> moves = activeSquare.getPiece().getMoves(this);
+    for (Vector2 move : moves) {
       getSquare(move).setColor(Chess.MOVE_SPACE_COLOR);
     }
 
-    ArrayList<int[]> attacks = activeSquare.getPiece().getAttacks(this);
-    for (int[] attack : attacks) {
+    ArrayList<Vector2> attacks = activeSquare.getPiece().getAttacks(this);
+    for (Vector2 attack : attacks) {
       getSquare(attack).setColor(Chess.ATTACK_SPACE_COLOR);
     }
   }
@@ -135,7 +136,7 @@ public class Board {
    * @return a list of attacked positions
    */
   // TODO: Implement this for determining checks for kings
-  public ArrayList<int[]> getAttackedSquares(String pieceColor) {
+  public ArrayList<Vector2> getAttackedSquares(String pieceColor) {
     return null;
   }
 }
