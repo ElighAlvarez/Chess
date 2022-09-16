@@ -89,5 +89,5 @@ public class Knight extends GamePiece {
    * Updates internal values associated with movement of this piece.
    * @param pos the position of this piece after it is moved in [x, y] format
    */
-  public void move(int[] notUsed) {}
+  public void move(int[] pos) {}
 }

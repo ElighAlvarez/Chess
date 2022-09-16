@@ -106,7 +106,10 @@ public class Chess {
     userInput.nextLine();
   }
 
-  // TODO: Continue JavaDocs here!
+  /**
+   * Takes user input to move the selected piece.
+   * @param userInput The user input Scanner
+   */
   public void executeMove(Scanner userInput) {
     int userInt = letterToNumber(userInput);
     if (userInt == 0) {
@@ -123,6 +126,11 @@ public class Chess {
     userInput.nextLine();
   }
 
+  /**
+   * Brings the user to adjustment mode, where the user can add and remove pieces and adjust the
+   * number of earned points.
+   * @param userInput The user input Scanner
+   */
   public void enterAdjustMode(Scanner userInput) {
     //System.out.println("\nYou have entered the adjustment mode. You may now add and remove "
     //    + "pieces "
@@ -133,6 +141,9 @@ public class Chess {
     userInput.nextLine();
   }
 
+  /**
+   * Loads the standard Chess pieces in a standard configuration in this Chess game.
+   */
   private void setup() {
     String white = WHITE_PIECE_COLOR;
     String black = BLACK_PIECE_COLOR;
@@ -173,10 +184,18 @@ public class Chess {
     }
   }
 
+  /**
+   * Prints the current Board state to the console.
+   */
   public void display() {
     System.out.println(gameBoard);
   }
 
+  /**
+   * Selects the piece located at the provided position (in [x, y] format). Notifies the user if
+   * a piece is not at that position.
+   * @param pos The position to select in [x, y] format
+   */
   public void selectPiece(int[] pos) {
     if (gameBoard.getSquare(pos) == null || gameBoard.getSquare(pos).getPiece() == null) {
       System.out.println("There is no piece at that position.");
@@ -187,6 +206,12 @@ public class Chess {
     display();
   }
 
+  /**
+   * Moves the currently selected piece to the provided location. Moving to an empty Square
+   * simply moves the piece. Moving to a Square containing a piece of the opposite color "takes"
+   * the piece. Other movements are not allowed.
+   * @param pos The target of a move in [x, y] format
+   */
   public void moveCurrentPiece(int[] pos) {
     Square target = gameBoard.getSquare(pos);
     Square current = gameBoard.getActiveSquare();
@@ -221,6 +246,11 @@ public class Chess {
     display();
   }
 
+  /**
+   * Translates a user-provided column indicator (letter) to its corresponding int value
+   * @param userInput The user input Scanner
+   * @return The int value of the user-provided column indicator. 0 if the provided input is invalid
+   */
   public static int letterToNumber(Scanner userInput) {
     if (!userInput.hasNext()) {
       userInput.nextLine();
