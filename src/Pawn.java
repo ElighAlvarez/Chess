@@ -30,7 +30,7 @@ public class Pawn extends GamePiece {
   }
 
   /**
-   * Returns a list of valid moves for this piece in [x, y] format.
+   * Returns a list of valid moves for this piece.
    * @param gameBoard The Board containing this piece.
    * @return A valid list of moves for this piece.
    */
@@ -57,7 +57,7 @@ public class Pawn extends GamePiece {
   }
 
   /**
-   * Returns a list of valid attacks for this piece in [x, y] format.
+   * Returns a list of valid attacks for this piece.
    * @param gameBoard The Board containing this piece.
    * @return A valid list of attacks for this piece.
    */
@@ -105,7 +105,7 @@ public class Pawn extends GamePiece {
 
   /**
    * Updates internal values associated with movement of this piece.
-   * @param pos the position of this piece after it is moved in [x, y] format
+   * @param pos the position of this piece after it is moved
    */
   public void move(Vector2 pos) {
     hasMoved = true;
@@ -114,5 +114,16 @@ public class Pawn extends GamePiece {
 
   public boolean hasMoved() {
     return hasMoved;
+  }
+
+  /**
+   * Returns a duplicate copy of this piece.
+   * @return a duplicate copy of this piece.
+   */
+  public GamePiece copy() {
+    Pawn copy = new Pawn(this.pieceColor);
+    copy.currPos = this.currPos.deepCopy();
+    copy.hasMoved = this.hasMoved;
+    return copy;
   }
 }

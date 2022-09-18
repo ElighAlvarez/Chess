@@ -20,7 +20,6 @@ public class Chess {
   private Board gameBoard;
   private int whitePoints;
   private int blackPoints;
-  private Vector2 pos;
 
   /**
    * Allows players to play a game of Chess with the standard game setup.
@@ -30,7 +29,6 @@ public class Chess {
     printWelcome();
     Scanner userInput = new Scanner(System.in);
     Chess game = new Chess();
-    game.pos = new Vector2(0, 0);
     boolean exit = false;
 
     while(!exit && game.whitePoints < 900 && game.blackPoints < 900) {
@@ -112,6 +110,7 @@ public class Chess {
     }
 
     selectPiece(new Vector2(x, y));
+    display();
   }
 
   /**
@@ -139,6 +138,7 @@ public class Chess {
     }
 
     moveCurrentPiece(new Vector2(x, y));
+    display();
   }
 
   /**
@@ -207,8 +207,8 @@ public class Chess {
   }
 
   /**
-   * Selects the piece located at the provided position (in [x, y] format). Notifies the user if
-   * a piece is not at that position.
+   * Selects the piece located at the provided position. Notifies the user if a piece is not at
+   * that position.
    * @param pos The position to select in [x, y] format
    */
   public void selectPiece(Vector2 pos) {
@@ -218,14 +218,13 @@ public class Chess {
     } else {
       gameBoard.setActiveSquare(pos);
     }
-    display();
   }
 
   /**
    * Moves the currently selected piece to the provided location. Moving to an empty Square
    * simply moves the piece. Moving to a Square containing a piece of the opposite color "takes"
    * the piece. Other movements are not allowed.
-   * @param pos The target of a move in [x, y] format
+   * @param pos The target of a move
    */
   public void moveCurrentPiece(Vector2 pos) {
     Square target = gameBoard.getSquare(pos);
@@ -259,8 +258,6 @@ public class Chess {
     } else {
       System.out.println("You cannot move the specified piece here.");
     }
-
-    display();
   }
 
   /**

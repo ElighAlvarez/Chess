@@ -26,7 +26,7 @@ public class Board {
 
   /**
    * Returns whether the provided position is within the bounds of this Board.
-   * @param posToCheck The position to check in [x, y] format
+   * @param posToCheck The position to check
    * @return True if the position is in bounds, False otherwise
    */
   public static boolean posInBounds(Vector2 posToCheck) {
@@ -45,7 +45,7 @@ public class Board {
 
   /**
    * Returns a String representation of this board, including Squares, Pieces, and coordinate
-   * labels (a-h and 1-8)
+   * labels (columns a-h and rows 1-8)
    * @return a String representation of this board
    */
   public String toString() {
@@ -82,7 +82,7 @@ public class Board {
 
   /**
    * Sets the Square at the specified position as the active square
-   * @param pos The new active position in [x, y] format
+   * @param pos The new active position
    */
   public void setActiveSquare(Vector2 pos) {
     activePos = pos.deepCopy();
@@ -90,8 +90,8 @@ public class Board {
   }
 
   /**
-   * Returns the active position in [x, y] format.
-   * @return the active position in [x, y] format.
+   * Returns the active position.
+   * @return the active position.
    */
   public Vector2 getActivePos() {
     return activePos;
@@ -140,12 +140,47 @@ public class Board {
   }
 
   /**
-   * Returns a list of positions attacked by the specified color in [x, y] format.
+   * Returns a list of pieces attacked by the specified color.
    * @param pieceColor The color with which to determine attacked spaces.
-   * @return a list of attacked positions
+   * @return a list of attacked pieces
    */
-  // TODO: Implement this for determining checks for kings
-  public ArrayList<Vector2> getAttackedSquares(String pieceColor) {
-    return null;
+  public ArrayList<Vector2> getAllAttacks(String pieceColor) {
+    ArrayList<Vector2> allAttacks = new ArrayList<>();
+    GamePiece tempPiece = null;
+    for (Square[] row : squares) {
+      for (Square square : row) {
+        tempPiece = square.getPiece();
+        if (tempPiece != null && tempPiece.getColor().equals(pieceColor)) {
+          allAttacks.addAll(tempPiece.getAttacks(this));
+        }
+      }
+    }
+    return allAttacks;
+  }
+
+  /**
+   * Generates and returns a deep copy of this Board.
+   * @return a deep copy of this Board.
+   */
+  public Board copy() {
+    Board copy = new Board();
+
+    // Copy active position
+    copy.activePos = this.activePos.deepCopy();
+
+    // Copy pieces
+    Vector2 runnerPos = null;
+    GamePiece runnerPiece = null;
+    for (int i = 0; i < 8; i++) {
+      for (int j = 0; j < 8; j++) {
+        runnerPos = new Vector2(i, j);
+        runnerPiece = this.getSquare(runnerPos).getPiece();
+        if (runnerPiece != null) {
+          copy.getSquare(runnerPos).setPiece(runnerPiece.copy());
+        }
+      }
+    }
+
+    return copy;
   }
 }

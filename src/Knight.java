@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class Knight extends GamePiece {
 
   private static final int POINT_VALUE = 3;
-  private String pieceColor;
   private static final Vector2[] VALID_MOVES = {
       new Vector2(1, 2),
       new Vector2(2, 1),
@@ -19,6 +18,8 @@ public class Knight extends GamePiece {
       new Vector2(-2, 1),
       new Vector2(-1, 2)
   };
+
+  private String pieceColor;
 
   /**
    * Creates a new Knight of the specified ASCII color.
@@ -36,7 +37,7 @@ public class Knight extends GamePiece {
   }
 
   /**
-   * Returns a list of valid moves for this piece in [x, y] format.
+   * Returns a list of valid moves for this piece.
    * @param gameBoard The Board containing this piece.
    * @return A valid list of moves for this piece.
    */
@@ -57,7 +58,7 @@ public class Knight extends GamePiece {
   }
 
   /**
-   * Returns a list of valid attacks for this piece in [x, y] format.
+   * Returns a list of valid attacks for this piece in.
    * @param gameBoard The Board containing this piece.
    * @return A valid list of attacks for this piece.
    */
@@ -97,7 +98,16 @@ public class Knight extends GamePiece {
 
   /**
    * Updates internal values associated with movement of this piece.
-   * @param pos the position of this piece after it is moved in [x, y] format
+   * @param pos the position of this piece after it is moved
    */
   public void move(Vector2 pos) {}
+
+  /**
+   * Returns a duplicate copy of this piece.
+   * @return a duplicate copy of this piece.
+   */
+  public GamePiece copy() {
+    Knight copy = new Knight(this.pieceColor);
+    return copy;
+  }
 }

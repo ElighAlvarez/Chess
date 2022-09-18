@@ -12,4 +12,5 @@ abstract class GamePiece {
   abstract public ArrayList<Vector2> getAttacks(Board gameBoard);
   abstract public String getColor();
   abstract public void move(Vector2 pos);
+  abstract public GamePiece copy();
 }
