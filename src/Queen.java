@@ -16,6 +16,7 @@ public class Queen extends GamePiece {
    */
   public Queen(String pieceColor) {
     this.pieceColor = pieceColor;
+    this.currPos = new Vector2(-1, -1);
   }
 
   /**

@@ -239,6 +239,11 @@ public class Chess {
       return;
     }
 
+    if (gameBoard.movesIntoCheck(pos)) {
+      System.out.println("That move puts you in check!");
+      return;
+    }
+
     if (target.getColor().equals(ATTACK_SPACE_COLOR)) {
       if (target.getPiece().getColor().equals(BLACK_PIECE_COLOR))
         whitePoints += target.getPiece().getPoints();

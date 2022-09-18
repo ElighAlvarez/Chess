@@ -36,8 +36,8 @@ public class Board {
 
   /**
    * Returns whether the provided position is empty.
-   * @param pos
-   * @return
+   * @param pos The position to check for empty
+   * @return true if the Square at pos is empty, false otherwise.
    */
   public boolean posEmpty(Vector2 pos) {
     return getSquare(pos) != null && getSquare(pos).getPiece() == null;
@@ -51,7 +51,8 @@ public class Board {
   public String toString() {
     StringBuilder str = new StringBuilder();
     for (int i = 0; i < 8; i++) {
-      str.append((8 - i) + " ");
+      str.append((8 - i));
+      str.append(" ");
       for (Square square : squares[i]) {
         str.append(square.toString());
       }
@@ -145,16 +146,24 @@ public class Board {
    * @return a list of attacked pieces
    */
   public ArrayList<Vector2> getAllAttacks(String pieceColor) {
-    ArrayList<Vector2> allAttacks = new ArrayList<>();
+    Vector2 originalActivePos = activePos.deepCopy();
+    Vector2 tempPos = null;
     GamePiece tempPiece = null;
-    for (Square[] row : squares) {
-      for (Square square : row) {
-        tempPiece = square.getPiece();
+
+    ArrayList<Vector2> allAttacks = new ArrayList<>();
+
+    for (int i = 1; i <= 8; i++) {
+      for (int j = 1; j <= 8; j++) {
+        tempPos = new Vector2(i, j);
+        tempPiece = getSquare(tempPos).getPiece();
         if (tempPiece != null && tempPiece.getColor().equals(pieceColor)) {
+          setActiveSquare(tempPos);
           allAttacks.addAll(tempPiece.getAttacks(this));
         }
       }
     }
+
+    setActiveSquare(originalActivePos);
     return allAttacks;
   }
 
@@ -165,14 +174,11 @@ public class Board {
   public Board copy() {
     Board copy = new Board();
 
-    // Copy active position
-    copy.activePos = this.activePos.deepCopy();
-
     // Copy pieces
     Vector2 runnerPos = null;
     GamePiece runnerPiece = null;
-    for (int i = 0; i < 8; i++) {
-      for (int j = 0; j < 8; j++) {
+    for (int i = 1; i <= 8; i++) {
+      for (int j = 1; j <= 8; j++) {
         runnerPos = new Vector2(i, j);
         runnerPiece = this.getSquare(runnerPos).getPiece();
         if (runnerPiece != null) {
@@ -181,6 +187,35 @@ public class Board {
       }
     }
 
+    copy.setActiveSquare(this.activePos.deepCopy());
+
     return copy;
+  }
+
+  /**
+   * Determines if a move from the active square to the provided position will result in a check
+   * on the moving color's King.
+   * @param move the position to move the piece in the active square
+   * @return true if the move results in a check, false otherwise
+   */
+  public boolean movesIntoCheck(Vector2 move) {
+    Board preview = this.copy();
+    String currColor = preview.getActiveSquare().getPiece().getColor();
+    String oppositeColor = currColor.equals(Chess.WHITE_PIECE_COLOR)
+        ? Chess.BLACK_PIECE_COLOR : Chess.WHITE_PIECE_COLOR;
+
+    // Set up a preview of the move in a copy of the current board.
+    preview.getActiveSquare().getPiece().move(new Vector2(move.getX(), move.getY()));
+    preview.getSquare(move).setPiece(preview.getActiveSquare().getPiece());
+    preview.getActiveSquare().setPiece(null);
+    preview.setActiveSquare(new Vector2(0, 0));
+
+    ArrayList<Vector2> enemyAttacks = preview.getAllAttacks(oppositeColor);
+
+    for (Vector2 attack : enemyAttacks) {
+      if (getSquare(attack).getPiece() instanceof King) return true;
+    }
+
+    return false;
   }
 }

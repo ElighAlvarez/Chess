@@ -36,4 +36,8 @@ public class Vector2 {
   public Vector2 deepCopy() {
     return new Vector2(x, y);
   }
+
+  public String toString() {
+    return "[" + x + ", " + y + "]";
+  }
 }

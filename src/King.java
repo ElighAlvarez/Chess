@@ -29,6 +29,7 @@ public class King extends GamePiece {
   public King(String pieceColor) {
     this.hasMoved = false;
     this.pieceColor = pieceColor;
+    this.currPos = new Vector2(-1, -1);
   }
 
   /**

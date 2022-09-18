@@ -16,6 +16,7 @@ public class Bishop extends GamePiece {
    */
   public Bishop(String pieceColor) {
     this.pieceColor = pieceColor;
+    this.currPos = new Vector2(-1, -1);
   }
 
   /**

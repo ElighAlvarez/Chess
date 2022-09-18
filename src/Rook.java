@@ -18,6 +18,7 @@ public class Rook extends GamePiece {
   public Rook(String pieceColor) {
     this.hasMoved = false;
     this.pieceColor = pieceColor;
+    this.currPos = new Vector2(-1, -1);
   }
 
   /**

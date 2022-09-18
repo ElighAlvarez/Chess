@@ -19,6 +19,7 @@ public class Pawn extends GamePiece {
   public Pawn(String pieceColor) {
     this.hasMoved = false;
     this.pieceColor = pieceColor;
+    this.currPos = new Vector2(-1, -1);
   }
 
   /**
